@@ -17,26 +17,33 @@ class User(AbstractUser):
         ('other', 'other'),
     )
 
+    phone_validator = RegexValidator(
+        regex=r'^09\d{9}$',
+        message="Phone number must be in format: 09121234567"
+    )
+
+    email_validator = RegexValidator(
+        regex=r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$',
+        message='Enter a valid email address (example: example@gmail.com).'
+    )
+
     # اطلاعات پایه
     username = models.CharField(max_length=150, unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='other')
 
 
-    # شماره موبایل ایران (0912xxxxxxx)
-    phone_regex = RegexValidator(
-        regex=r'^09\d{9}$',
-        message="شماره موبایل باید به این فرمت باشد: 09121234567"
+    email = models.CharField(
+        max_length=254,
+        unique=True,
+        validators=[email_validator]
     )
 
     phone = models.CharField(
-        validators=[phone_regex],
         max_length=11,
-        unique=True
+        unique=True,
+        validators=[phone_validator]
     )
-
-    # ایمیل یکتا بهتر است
-    email = models.EmailField(unique=True)
 
     # آدرس
     address = models.CharField(max_length=255, blank=True)
