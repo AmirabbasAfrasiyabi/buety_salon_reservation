@@ -83,7 +83,4 @@ class StaffProfileAdmin(admin.ModelAdmin):
         ('Working Hours', {
             'fields': ('working_hours',)
         }),
-        ('Profile Image', {
-            'fields': ('profile_image',)
-        }),
     )

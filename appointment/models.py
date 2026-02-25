@@ -14,7 +14,7 @@ class ServiceCategory(models.Model):
     slug = models.SlugField(max_length=100, unique=True , verbose_name='slug')
     description = models.TextField(blank=True,verbose_name='description')
     icon = models.CharField(max_length=100,blank=True,verbose_name='icon')
-    image = models.ImageField(upload_to='service_categories/',null=True,blank=True,verbose_name='image')
+    # image = models.ImageField(upload_to='service_categories/',null=True,blank=True,verbose_name='image')
     color_code = models.CharField(max_length=6,validators=[hex_color_validator],blank=True,verbose_name='Hex Color Code (without #)',)
     order = models.PositiveIntegerField(default=0,verbose_name='order')
     is_featured = models.BooleanField(default=False,verbose_name='is featured')
@@ -42,8 +42,8 @@ class Service(models.Model):
     discount_price = models.DecimalField(decimal_places=0,max_digits=10,blank=True,null=True,validators=[MinValueValidator(0)],verbose_name='discount price')
     duration = models.PositiveIntegerField(validators=[MinValueValidator(15)],verbose_name='duration')
 
-    #image
-    image = models.ImageField(upload_to='services/%Y/%m/',null=True,blank=True,verbose_name='image')
+
+    # image = models.ImageField(upload_to='services/%Y/%m/',null=True,blank=True,verbose_name='image')
 
     #count
     view_count = models.PositiveIntegerField(default=0,verbose_name='view count')

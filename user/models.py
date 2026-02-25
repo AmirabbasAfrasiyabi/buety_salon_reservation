@@ -27,6 +27,10 @@ class User(AbstractUser):
         message='Enter a valid email address (example: example@gmail.com).'
     )
 
+    PostalCode_validator = RegexValidator(
+        regex=r'^d{5} - d{5}',
+    )
+
     # اطلاعات پایه
     username = models.CharField(max_length=150, unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
@@ -49,7 +53,8 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=120, blank=True)
     state = models.CharField(max_length=120, blank=True)
-    postcode = models.CharField(max_length=20, blank=True)
+    postcode = models.CharField(unique=True,
+                                validators=[PostalCode_validator])
 
     # وضعیت‌ها
     is_verified = models.BooleanField(default=False)
@@ -179,7 +184,7 @@ class StaffProfile(models.Model):
     specialties = models.ManyToManyField( 'appointment.Service', blank=True,related_name='specialists',verbose_name='specialties')
     experience_years = models.PositiveIntegerField(default=0 , verbose_name='experience')
     bio = models.TextField(blank=True,null=True,verbose_name='bio')
-    profile_image = models.ImageField(upload_to='staff_profiles/%Y/%m/',blank=True,null=True,verbose_name='profile_image')
+    # profile_image = models.ImageField(upload_to='staff_profiles/%Y/%m/',blank=True,null=True,verbose_name='profile_image')
     working_hours = models.JSONField(default=dict,blank=True,null=True,verbose_name='working_hours')
 
     is_active = models.BooleanField(default=True, verbose_name='is_active')
